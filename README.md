@@ -5,7 +5,7 @@
 #Team Members:
 - Aryamann Zutshi(PL)
 - John Mosely(Front End Lead) @Jomo1217
-- Zach Willigham(Back End lead) @zachwilligham
+- Zach Willingham(Back End lead) @zachwillingham
 - Matthew Sullivan(Back end Developer) @matthewsullivan1
 - Will Battey(Front end Developer) @willbtty
 - Spencer Addis(Front end Developer @spnkrrr
