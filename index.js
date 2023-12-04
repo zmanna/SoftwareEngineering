@@ -36,3 +36,22 @@ document.getElementById('btn-eq').addEventListener('click', () => {
         console.error('Error:', error);
     });
 });
+
+// Function to call the C++ backend
+function calculateExpression(expression) {
+    // Use WebAssembly or other methods to call the C++ function
+    // For simplicity, assume the function is available globally
+    return Module.ccall('calculateExpression', 'number', ['string'], [expression]);
+}
+
+// Event listener for the "=" button
+document.querySelector("#btn-eq").onclick = function () {
+    const textbox = document.querySelector("#textbox");
+    const expression = textbox.value;
+
+    // Call the C++ backend
+    const result = calculateExpression(expression);
+
+    // Update the UI with the result or handle errors
+    textbox.value = result;
+};
