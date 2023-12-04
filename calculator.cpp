@@ -87,7 +87,7 @@ double evaluateExpression(const string& expression, bool& error) {
             }
             // Check for unmatched closing parenthesis
             if (!operators.empty()) {
-                operators.pop(); // Pop '('
+                operators.pop(); // Pop opening parenthesis
             } else {
                 cerr << "Error: Unmatched closing parenthesis." << endl;
                 error = true;
@@ -136,11 +136,11 @@ double evaluateExpression(const string& expression, bool& error) {
 
     return values.top();
 }
-
-// Main function
+// Main
 int main() {
     string expression;
 
+    // Reading input
     cout << "Enter an arithmetic expression: ";
     getline(cin, expression);
 
