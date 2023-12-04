@@ -6,7 +6,9 @@
 
 using namespace std;
 
+// Function to get the precedence of an operator
 int getPrecedence(char op) {
+    // Returns the precedence of the operator
     if (op == '^')
         return 3;
     else if (op == '*' || op == '/' || op == '%')
@@ -17,7 +19,9 @@ int getPrecedence(char op) {
         return 0;
 }
 
-double applyOperator(char op, double operand1, double operand2, bool& error, string& errorMsg) {
+// Function to apply an operator to two operands
+double applyOperator(char op, double operand1, double operand2, bool& error) {
+    // Applies the operator to the operands and handles errors
     switch (op) {
         case '+':
             return operand1 + operand2;
@@ -26,48 +30,44 @@ double applyOperator(char op, double operand1, double operand2, bool& error, str
         case '*':
             return operand1 * operand2;
         case '/':
-            if (operand2 == 0) {
-                errorMsg = "Division by zero error.";
+            // Check for division by zero
+            if (operand2 != 0) {
+                return operand1 / operand2;
+            } else {
+                cerr << "Error: Division by zero." << endl;
                 error = true;
-                return 0;
+                return 0.0;
             }
-            return operand1 / operand2;
         case '%':
-            if (operand2 == 0) {
-                errorMsg = "Modulo by zero error.";
+            // Check for modulo by zero
+            if (operand2 != 0) {
+                return fmod(operand1, operand2);
+            } else {
+                cerr << "Error: Modulo by zero." << endl;
                 error = true;
-                return 0;
+                return 0.0;
             }
-            return fmod(operand1, operand2);
         case '^':
             return pow(operand1, operand2);
         default:
-            errorMsg = "Invalid operator '" + string(1, op) + "'.";
+            cerr << "Error: Invalid operator" << endl;
             error = true;
-            return 0;
+            return 0.0;
     }
 }
 
-void processOperator(stack<double>& values, stack<char>& operators, bool& error, string& errorMsg) {
-    if (values.size() < 2) {
-        errorMsg = "Insufficient operands.";
-        error = true;
-        return;
-    }
-    double operand2 = values.top(); values.pop();
-    double operand1 = values.top(); values.pop();
-    char op = operators.top(); operators.pop();
-    values.push(applyOperator(op, operand1, operand2, error, errorMsg));
-}
-
-double evaluateExpression(const string& expression, bool& error, string& errorMsg) {
+// Function to evaluate an arithmetic expression
+double evaluateExpression(const string& expression, bool& error) {
+    // Stacks to store operands and operators
     stack<double> values;
     stack<char> operators;
 
     for (size_t i = 0; i < expression.length(); ++i) {
+        // Check for whitespaces and skip them
         if (isspace(expression[i])) {
             continue;
-        } else if (isdigit(expression[i]) || expression[i] == '.') {
+        } else if (isdigit(expression[i])) {
+            // Read and push operands onto the stack
             string operandStr;
             while (i < expression.length() && (isdigit(expression[i]) || expression[i] == '.')) {
                 operandStr += expression[i++];
@@ -77,67 +77,92 @@ double evaluateExpression(const string& expression, bool& error, string& errorMs
         } else if (expression[i] == '(') {
             operators.push('(');
         } else if (expression[i] == ')') {
+            // Evaluate expressions within parentheses
             while (!operators.empty() && operators.top() != '(') {
-                processOperator(values, operators, error, errorMsg);
-                if (error) return 0;
+                double operand2 = values.top();
+                values.pop();
+                double operand1 = values.top();
+                values.pop();
+                char op = operators.top();
+                operators.pop();
+                values.push(applyOperator(op, operand1, operand2, error));
+                if (error) return 0.0;
             }
-            if (operators.empty()) {
-                errorMsg = "Unmatched closing parenthesis.";
+            // Check for unmatched closing parenthesis
+            if (!operators.empty()) {
+                operators.pop(); // Pop '('
+            } else {
+                cerr << "Error: Unmatched closing parenthesis." << endl;
                 error = true;
-                return 0;
+                return 0.0;
             }
-            operators.pop();
-        } else if (getPrecedence(expression[i]) > 0) {
+        } else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/' ||
+                   expression[i] == '%' || expression[i] == '^') {
+            // Evaluate operators based on precedence
             while (!operators.empty() && getPrecedence(operators.top()) >= getPrecedence(expression[i])) {
-                processOperator(values, operators, error, errorMsg);
-                if (error) return 0;
+                double operand2 = values.top();
+                values.pop();
+                double operand1 = values.top();
+                values.pop();
+                char op = operators.top();
+                operators.pop();
+                values.push(applyOperator(op, operand1, operand2, error));
+                if (error) return 0.0;
             }
             operators.push(expression[i]);
         } else {
-            errorMsg = "Invalid character '" + string(1, expression[i]) + "'.";
+            // Invalid character in the expression
+            cerr << "Error: Invalid character '" << expression[i] << "' in the expression." << endl;
             error = true;
-            return 0;
+            return 0.0;
         }
     }
 
+    // Evaluate remaining operators
     while (!operators.empty()) {
-        processOperator(values, operators, error, errorMsg);
-        if (error) return 0;
+        double operand2 = values.top();
+        values.pop();
+        double operand1 = values.top();
+        values.pop();
+        char op = operators.top();
+        operators.pop();
+        values.push(applyOperator(op, operand1, operand2, error));
+        if (error) return 0.0;
     }
 
-    if (values.size() != 1) {
-        errorMsg = "Invalid expression or unmatched opening parenthesis.";
+    // Check for an empty expression
+    if (values.empty()) {
+        cerr << "Error: Empty expression." << endl;
         error = true;
-        return 0;
+        return 0.0;
     }
 
     return values.top();
 }
 
+// New function to serve as an entry point for the web server
+extern "C" double calculateExpression(const char* expression) {
+    bool error = false;
+    return evaluateExpression(expression, error);
+}
+
+// Main function
 int main() {
+    // Input expression from the user
     string expression;
+    cout << "Enter an arithmetic expression: ";
+    getline(cin, expression);
 
-    while (true) {
-        cout << "Enter an arithmetic expression (or type 'quit' to exit): ";
-        getline(cin, expression);
+    // Evaluate expression and handle errors
+    bool error = false;
+    double result = evaluateExpression(expression, error);
 
-        if (expression == "quit") {
-            break; // Exit the loop if the user types 'quit'
-        }
-
-        bool error = false;
-        string errorMsg;
-        double result = evaluateExpression(expression, error, errorMsg);
-
-        if (!error) {
-            cout << "Result: " << result << endl;
-        } else {
-            cerr << "Error encountered: " << errorMsg << endl;
-        }
-
-        cout << endl; // Adding a newline for better readability
+    // Display result or error message
+    if (!error) {
+        cout << "Result: " << result << endl;
+    } else {
+        cerr << "Error encountered during evaluation." << endl;
     }
 
-    cout << "Exiting the calculator." << endl;
     return 0;
 }
