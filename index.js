@@ -1,144 +1,144 @@
-/*button zero click functionality*/
+/*Zero button click*/
 document.querySelector("#btn-0").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "0";
 }
 
-/*button one click functionality*/
+/*One button click*/
 document.querySelector("#btn-1").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "1";
 }
 
-/*button two click functionality*/
+/*Two button click*/
 document.querySelector("#btn-2").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "2";
 }
 
-/*button three click functionality*/
+/*Three button click*/
 document.querySelector("#btn-3").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "3";
 }
 
-/*button four click functionality*/
+/*Four button click*/
 document.querySelector("#btn-4").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "4";
 }
 
-/*button five click functionality*/
+/*Five button click*/
 document.querySelector("#btn-5").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "5";
 }
 
-/*button six click functionality*/
+/*Six button click*/
 document.querySelector("#btn-6").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "6";
 }
 
-/*button seven click functionality*/
+/*Seven button click*/
 document.querySelector("#btn-7").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "7";
 }
 
-/*button eight click functionality*/
+/*Eight button click*/
 document.querySelector("#btn-8").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "8";
 }
 
-/*button nine click functionality*/
+/*Nine button click*/
 document.querySelector("#btn-9").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "9";
 }
 
-/*button plus click functionality*/
+/*Plus button click*/
 document.querySelector("#btn-add").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "+";
 }
 
-/*button minus click functionality*/
+/*Minus button click*/
 document.querySelector("#btn-sub").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "-";
 }
 
-/*button times click functionality*/
+/*Times button click*/
 document.querySelector("#btn-mult").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "×";
 }
 
-/*button divide click functionality*/
+/*Divide button click*/
 document.querySelector("#btn-div").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "÷";
 }
 
-/*button modulo click functionality*/
+/*Modulo button click*/
 document.querySelector("#btn-mod").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "%";
 }
 
-/*button squared click functionality*/
+/*Square button click*/
 document.querySelector("#btn-sqr").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "²";
 }
 
-/*button power click functionality*/
+/*Exponent button click*/
 document.querySelector("#btn-pow").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "^";
 }
 
-/*button decimal click functionality*/
+/*Decimal button click*/
 document.querySelector("#btn-dec").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + ".";
 }
 
-/*button open par click functionality*/
+/*Open par button click*/
 document.querySelector("#btn-open-par").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + "(";
 }
 
-/*button close par click functionality*/
+/*Close par button click */
 document.querySelector("#btn-close-par").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
     textbox.innerText = textbox.innerText + ")";
 }
 
-/*button clear click functionality*/
+/*Clear button click*/
 document.querySelector("#btn-clr").onclick = function(){
 
     const textbox = document.querySelector("#textbox");
